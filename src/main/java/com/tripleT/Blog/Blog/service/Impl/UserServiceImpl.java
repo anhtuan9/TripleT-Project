@@ -13,29 +13,29 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public Page<User> findAll(Pageable pageable) {
-        return null;
+        return userRepository.findAll(pageable);
     }
 
     @Override
     public User findById(Long id) {
-        return null;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void save(User blog) {
-
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     @Override
     public void remove(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
     public Page<User> findAllByNickname(String nickname, Pageable pageable) {
         return userRepository.findAllByNickname(nickname, pageable);
     }
-
 }

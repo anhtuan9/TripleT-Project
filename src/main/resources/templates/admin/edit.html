@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit note</title>
+</head>
+<body>
+<h1>Edit note</h1>
+<p>
+    <a href="/admin/list">Note list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/admin/edit-user}" th:object="${user}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>nickname:</td>
+            <td><input type="text" th:field="*{nickname}"/></td>
+        </tr>
+        <tr>
+            <td>user name:</td>
+            <td><input type="text" th:field="*{username}"/></td>
+        </tr>
+        <tr>
+            <td>password:</td>
+            <td><input type="text" th:field="*{password}"/></td>
+        </tr>
+        <tr>
+            <td>role:</td>
+            <td>
+                <select th:field="*{role}">
+                    <option th:each="p : ${roles}" th:value="${p.name}" th:text="${p.name}"></option>
+                </select>
+            </td>
+        </tr>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update note"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

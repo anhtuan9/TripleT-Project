@@ -13,7 +13,7 @@ public interface UserService {
 
     User findById(Long id);
 
-    void save(User blog);
+    void save(User user);
 
     void remove(Long id);
     Page<User> findAllByNickname(String nickname, Pageable pageable);
