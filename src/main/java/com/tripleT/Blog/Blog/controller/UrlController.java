@@ -1,14 +1,11 @@
 package com.tripleT.Blog.Blog.controller;
 
-import com.tripleT.Blog.Blog.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class UrlController {
     @GetMapping("/")
-    public String index(@ModelAttribute("user") User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
+    public String index() {
         return "index";
     }
 

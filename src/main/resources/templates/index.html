@@ -5,15 +5,8 @@
     <title>Index Page</title>
 </head>
 <body>
-<th:block th:object="${user}">
-    <tr>
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.nickname}"></td>
-        <td th:text="${user.username}"></td>
-        <td th:text="${user.role}"></td>
-    </tr>
-</th:block>
+Logged user: <span th:text="${#request.userPrincipal}"></span>
+Roles: <span th:text="${#request.userPrincipal.principal.authorities}"></span>
 <form action="#" th:action="@{/logout}" method="POST">
     <button type="submit">Logout</button>
 </form>
