@@ -12,7 +12,7 @@
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
-<form th:action="@{/admin/create-user}" th:object="${user}" method="post">
+<form th:action="@{/admin/create-user}" th:object="${user}" enctype="multipart/form-data" method="post">
     <table>
         <tr>
             <td>User Name:</td>
@@ -25,6 +25,9 @@
         <tr>
             <td>nickname:</td>
             <td><input type="text" th:field="*{nickname}"/></td>
+        </tr>
+        <tr>
+            <td th:object="${myFile}"><input type="file" th:field="*{multipartFile}"/></td>
         </tr>
         <tr>
             <td>role:</td>
