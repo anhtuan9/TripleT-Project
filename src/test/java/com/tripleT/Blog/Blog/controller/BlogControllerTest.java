@@ -15,6 +15,7 @@ import javax.swing.*;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
@@ -33,7 +34,7 @@ public class BlogControllerTest {
 
     @Test
     public void listBlogs() throws Exception {
-        mockMvc.perform(get("/blog"))
+        mockMvc.perform(get("/blogs"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("/blog/list"));
     }
@@ -47,7 +48,7 @@ public class BlogControllerTest {
 
     @Test
     public void createBlog() throws Exception {
-        mockMvc.perform(get("/create-blog"))
+        mockMvc.perform(post("/create-blog"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("/blog/create"));
     }
@@ -61,21 +62,21 @@ public class BlogControllerTest {
 
     @Test
     public void updateBlog() throws Exception {
-        mockMvc.perform(get("/edit-blog"))
+        mockMvc.perform(post("/edit-blog"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("/blog/edit"));
     }
 
     @Test
     public void showDeleteBlog() throws Exception {
-        mockMvc.perform(get("/delete-blog"))
+        mockMvc.perform(get("/delete-blog/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("/blog/delete"));
     }
 
     @Test
     public void deleteBlog() throws Exception {
-        mockMvc.perform(get("/delete-blog"))
+        mockMvc.perform(post("/delete-blog"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("/blog/delete"));
     }

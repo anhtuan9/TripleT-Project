@@ -16,7 +16,7 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @GetMapping
+    @GetMapping("/blogs")
     public ModelAndView listBlogs(@RequestParam("blog") Optional<String> b, Pageable pageable){
         Page<Blog> blogs;
         if(b.isPresent()){
