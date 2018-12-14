@@ -1,5 +1,6 @@
 package com.tripleT.Blog.Blog.controller;
 
+import com.tripleT.Blog.Blog.model.MyFile;
 import com.tripleT.Blog.Blog.model.Role;
 import com.tripleT.Blog.Blog.model.User;
 import com.tripleT.Blog.Blog.repository.RoleRepository;
@@ -10,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.File;
 import java.util.HashSet;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -31,15 +34,16 @@ public class AdminController {
     }
 
 
-    @GetMapping("/create-user")
+    @GetMapping("/admin/create-user")
     public ModelAndView showCreateForm() {
         ModelAndView modelAndView = new ModelAndView("/admin/create");
         modelAndView.addObject("user", new User());
+        modelAndView.addObject("myFile", new MyFile());
         return modelAndView;
     }
 
-    @PostMapping("/create-user")
-    public ModelAndView saveUser(@ModelAttribute("user") User user) {
+    @PostMapping("/admin/create-user")
+    public ModelAndView saveUser(@ModelAttribute("user") User user,MyFile myFile) {
         User newuser = new User();
         newuser.setEmail(user.getEmail());
         newuser.setNickname(user.getNickname());
@@ -49,6 +53,15 @@ public class AdminController {
         HashSet<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName(user.getRole()));
         newuser.setRoles(roles);
+        try {
+            MultipartFile multipartFile = myFile.getMultipartFile();
+            String fileName = multipartFile.getOriginalFilename();
+            File file = new File(this.getFolderUpload(), fileName);
+            multipartFile.transferTo(file);
+            newuser.setImg("/img/"+ fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         userService.save(newuser);
         ModelAndView modelAndView = new ModelAndView("/admin/create");
         modelAndView.addObject("user", new User());
@@ -56,7 +69,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/admin/list")
     public ModelAndView listUser(@RequestParam("s") Optional<String> s, Pageable pageable) {
         Page<User> users;
         if (s.isPresent()) {
@@ -69,12 +82,13 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/edit-user/{id}")
+    @GetMapping("/admin/edit-user/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user != null) {
             ModelAndView modelAndView = new ModelAndView("/admin/edit");
             modelAndView.addObject("user", user);
+            modelAndView.addObject("myFile", new MyFile());
             return modelAndView;
 
         } else {
@@ -83,18 +97,27 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/edit-user")
-    public ModelAndView updateUser(@ModelAttribute("user") User user) {
+    @PostMapping("/admin/edit-user")
+    public ModelAndView updateUser(@ModelAttribute("user") User user, MyFile myFile) {
         User newuser = new User();
         newuser.setId(user.getId());
         newuser.setEmail(user.getEmail());
         newuser.setNickname(user.getNickname());
         newuser.setUsername(user.getUsername());
         newuser.setRole(user.getRole());
-        newuser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newuser.setPassword(user.getPassword());
         HashSet<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName(user.getRole()));
         newuser.setRoles(roles);
+        try {
+            MultipartFile multipartFile = myFile.getMultipartFile();
+            String fileName = multipartFile.getOriginalFilename();
+            File file = new File(this.getFolderUpload(), fileName);
+            multipartFile.transferTo(file);
+            newuser.setImg("/img/"+ fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         userService.save(newuser);
         ModelAndView modelAndView = new ModelAndView("/admin/edit");
         modelAndView.addObject("user", user);
@@ -102,7 +125,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/delete-user/{id}")
+    @GetMapping("/admin/delete-user/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user != null) {
@@ -116,9 +139,16 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/delete-user")
+    @PostMapping("/admin/delete-user")
     public String deleteUser(@ModelAttribute("user") User user) {
         userService.remove(user.getId());
         return "redirect:list";
+    }
+    public File getFolderUpload() {
+        File folderUpload = new File("D:\\project\\Blog\\src\\main\\resources\\static\\img");
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        return folderUpload;
     }
 }

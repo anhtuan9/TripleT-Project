@@ -13,7 +13,24 @@ public class User {
     private String nickname;
     private String email;
     private String role;
+    private String img;
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public User(String username, String password, String nickname, String email, String role, String img) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.role = role;
+        this.img = img;
+    }
 
     public long getId() {
         return id;
