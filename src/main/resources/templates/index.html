@@ -7,8 +7,9 @@
 </head>
 
 <body>
-Logged user: <span th:text="${#request.userPrincipal}"></span>
+Logged user: <span th:text="${#request.userPrincipal.name}"></span>
 Roles: <span th:text="${#request.userPrincipal.principal.authorities}"></span>
+<a th:href="@{/user/edit-user/__${#request.userPrincipal.name}__ }">Edit</a>
 <form action="#" th:action="@{/logout}" method="POST">
     <button type="submit">Logout</button>
 </form>

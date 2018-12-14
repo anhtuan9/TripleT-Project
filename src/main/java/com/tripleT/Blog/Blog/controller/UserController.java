@@ -8,13 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping("user/info")
-    public String getinfo(){
-        return "user/info";
+    public ModelAndView getinfo(Principal principal){
+        ModelAndView modelAndView = new ModelAndView( "user/info");
+        User user = userService.findByUsername(principal.getName());
+        modelAndView.addObject("user", user);
+        return modelAndView;
     }
 
     @GetMapping("/user/edit-user/{name}")

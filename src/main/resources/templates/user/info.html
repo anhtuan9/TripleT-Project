@@ -11,10 +11,15 @@
 </p>
 
 <body>
-Logged user: <span th:text="${#request.userPrincipal}"></span>
-Roles: <span th:text="${#request.userPrincipal.principal.authorities}"></span>
-
-<a th:href="@{/user/edit-user/__${#request.userPrincipal.name}__ }">Edit</a>
+<table border="1" th:object="${user}">
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.nickname}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.role}"></td>
+    </tr>
+</table>
 <form action="#" th:action="@{/logout}" method="POST">
     <button type="submit">Logout</button>
 </form>
