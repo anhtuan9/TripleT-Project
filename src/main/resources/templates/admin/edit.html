@@ -12,7 +12,7 @@
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
-<form th:action="@{/admin/edit-user}" th:object="${user}" method="post">
+<form th:action="@{/admin/edit-user}" th:object="${user}" enctype="multipart/form-data" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
@@ -26,6 +26,9 @@
         <tr>
             <td>password:</td>
             <td><input type="text" th:field="*{password}"/></td>
+        </tr>
+        <tr>
+            <td th:object="${myFile}"><input type="file" th:field="*{multipartFile}"/></td>
         </tr>
         <tr>
             <td>role:</td>
