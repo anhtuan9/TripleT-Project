@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,15 +22,36 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping("/blogs")
-    public ModelAndView listBlogs(@RequestParam("blog") Optional<String> b, Pageable pageable){
-        Page<Blog> blogs;
-        if(b.isPresent()){
-            blogs = blogService.findAllByTitleContaining(b.get(), pageable);
-        }else{
-            blogs = blogService.findAll(pageable);
-        }
+    public ModelAndView listBlogs(@RequestParam(name = "blog",required = false) Optional<String> b,
+                                  @RequestParam(name = "selection",required = false, defaultValue = "author") String s,
+                                  Pageable pageable){
         ModelAndView list = new ModelAndView("/blog/list");
-        list.addObject("blogs", blogs);
+        Page<Blog> blogs;
+        if(s.equals("tag")){
+            if (b.isPresent()) {
+                blogs = blogService.findAllByTagsContaining(b.get(), pageable);
+            } else {
+                blogs = blogService.findAll(pageable);
+            }
+            list.addObject("blogs", blogs);
+            return list;
+        }else if(s.equals("author")){
+            if (b.isPresent()) {
+                blogs = blogService.findAllByAuthorContaining(b.get(), pageable);
+            } else {
+                blogs = blogService.findAll(pageable);
+            }
+            list.addObject("blogs", blogs);
+            return list;
+        }else if(s.equals("title")){
+            if (b.isPresent()) {
+                blogs = blogService.findAllByTitleContaining(b.get(), pageable);
+            } else {
+                blogs = blogService.findAll(pageable);
+            }
+            list.addObject("blogs", blogs);
+            return list;
+        }
         return list;
     }
     @GetMapping("/create-blog")
@@ -38,7 +61,11 @@ public class BlogController {
         return showCreate;
     }
     @PostMapping("/create-blog")
-    public ModelAndView createBlog(@ModelAttribute("blog") Blog blog){
+    public ModelAndView createBlog(@Validated @ModelAttribute("blog") Blog blog, BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()){
+            ModelAndView error = new ModelAndView("/blog/create");
+            return error;
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         blog.setDate(dateFormat.format(date));
@@ -61,7 +88,14 @@ public class BlogController {
         }
     }
     @PostMapping("/edit-blog")
-    public ModelAndView updateBlog(@ModelAttribute("blog") Blog blog){
+    public ModelAndView updateBlog(@Validated @ModelAttribute("blog") Blog blog, BindingResult bindingResult){
+        if(bindingResult.hasFieldErrors()){
+            ModelAndView error = new ModelAndView("/blog/edit");
+            return error;
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        blog.setDate(dateFormat.format(date));
         blogService.save(blog);
         ModelAndView update = new ModelAndView("/blog/edit");
         update.addObject("blog", blog);

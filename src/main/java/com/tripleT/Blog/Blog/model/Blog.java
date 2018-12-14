@@ -1,15 +1,24 @@
 package com.tripleT.Blog.Blog.model;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "blog")
-public class Blog {
+public class Blog{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String author_name;
+    @NotEmpty(message = "Not empty")
+    private String author;
+    @NotEmpty(message = "Not empty")
     private String title;
+    @NotEmpty(message = "Not empty")
     private String tags;
     private String date;
     private String content;
@@ -18,7 +27,7 @@ public class Blog {
     }
 
     public Blog(String author_name, String title, String tags, String date, String content) {
-        this.author_name = author_name;
+        this.author = author_name;
         this.title = title;
         this.tags = tags;
         this.date = date;
@@ -34,11 +43,11 @@ public class Blog {
     }
 
     public String getAuthor_name() {
-        return author_name;
+        return author;
     }
 
     public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
+        this.author= author_name;
     }
 
     public String getTitle() {
@@ -72,4 +81,5 @@ public class Blog {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

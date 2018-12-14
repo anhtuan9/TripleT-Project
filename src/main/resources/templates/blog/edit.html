@@ -23,10 +23,17 @@
         <tr>
             <td>Author name:</td>
             <td><input type="text" th:field="*{author_name}"></td>
+            <td th:if="${#fields.hasErrors('author_name')}" th:errors="*{author_name}">Name error</td>
         </tr>
         <tr>
             <td>Title</td>
             <td><input type="text" th:field="*{title}"></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</td>
+        </tr>
+        <tr>
+            <td>Tags</td>
+            <td><input type="text" th:field="*{tags}"></td>
+            <td th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">Tags error</td>
         </tr>
         <tr>
             <td><label>Content</label></td>

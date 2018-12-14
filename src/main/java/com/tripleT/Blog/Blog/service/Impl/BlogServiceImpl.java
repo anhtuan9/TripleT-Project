@@ -26,6 +26,16 @@ public class BlogServiceImpl implements BlogService {
     public void remove(Long id) {blogRepository.deleteById(id);}
 
     @Override
+    public Page<Blog> findAllByAuthorContaining(String author, Pageable pageable){
+        return blogRepository.findAllByAuthorContaining(author, pageable);
+    }
+
+    @Override
+    public Page<Blog> findAllByTagsContaining(String tags, Pageable pageable){
+        return blogRepository.findAllByTagsContaining(tags, pageable);
+    }
+
+    @Override
     public Page<Blog> findAllByTitleContaining(String title, Pageable pageable){
         return blogRepository.findAllByTitleContaining(title, pageable);
     }

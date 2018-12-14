@@ -9,5 +9,7 @@ public interface BlogService {
     Blog findById(Long id);
     void save(Blog blog);
     void remove(Long id);
-    Page<Blog> findAllByTitleContaining(String title, Pageable pageable);
+    Page<Blog> findAllByAuthorContaining(String author, Pageable pageable);
+    Page<Blog> findAllByTagsContaining(String tags, Pageable pageable);
+    Page<Blog> findAllByTitleContaining(String titel, Pageable pageable);
 }
