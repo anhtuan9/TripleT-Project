@@ -21,6 +21,7 @@
     <tr>
         <td>Author name</td>
         <td><input type="text" th:field="*{author_name}"></td>
+        <<<<<<< Updated upstream
         <td th:if="${#fields.hasErrors('author_name')}" th:errors="*{author_name}">Name error</td>
     </tr>
     <br>
@@ -34,6 +35,12 @@
         <td>Tags</td>
         <td><input type="text" th:field="*{tags}"></td>
         <td th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">Tags error</td>
+        =======
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td><input type="text" th:field="*{title}"></td>
+        >>>>>>> Stashed changes
     </tr>
     <tr>
         <td><label>Content</label><textarea th:field="*{content}"/></td>

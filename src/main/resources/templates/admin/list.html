@@ -21,7 +21,6 @@
 <table border="1">
     <tr>
         <th>id</th>
-        <th>image</th>
         <th>nick name</th>
         <th>email</th>
         <th>user name</th>
@@ -32,7 +31,6 @@
     <th:block th:each="user : ${users}">
         <tr>
             <td th:text="${user.id}"></td>
-            <td><img width="20px" th:src="${user.img}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.nickname}"></td>
             <td th:text="${user.username}"></td>

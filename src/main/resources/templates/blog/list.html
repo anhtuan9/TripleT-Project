@@ -5,12 +5,16 @@
     <title>Blogs</title>
 </head>
 <body>
+<<<<<<< Updated upstream
 <a href="/admin/list">User list</a>
+=======
+>>>>>>> Stashed changes
 <a href="/blogs">Blog</a>
 <p>
     <a href="/create-blog">Create new blog</a>
 </p>
 <form>
+    <<<<<<< Updated upstream
     Search by:
     <input name="blog" type="text">
     <select name="selection">
@@ -18,13 +22,20 @@
         <option value="title">Title</option>
         <option value="tag">Tag</option>
     </select>
+    =======
+    Search by title:
+    <input name="blog" type="text">
+    >>>>>>> Stashed changes
     <input type="submit" value="Search">
 </form><br/>
 <table border="1">
     <tr>
         <th>Author name</th>
         <th>Title</th>
+        <<<<<<< Updated upstream
         <th>Tag</th>
+        =======
+        >>>>>>> Stashed changes
         <th>Date</th>
         <th>View</th>
         <th>Edit</th>
@@ -34,7 +45,10 @@
         <tr>
             <td th:text="${blogs.author_name}"></td>
             <td th:text="${blogs.title}"></td>
+            <<<<<<< Updated upstream
             <td th:text="${blogs.tags}"></td>
+            =======
+            >>>>>>> Stashed changes
             <td th:text="${blogs.date}"></td>
             <td><a th:href="@{/view-blog/__${blogs.id}__}">View</a></td>
             <td><a th:href="@{/edit-blog/__${blogs.id}__ }">Edit</a></td>
