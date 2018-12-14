@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -30,14 +31,14 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/create-user")
+    @GetMapping("/create-user")
     public ModelAndView showCreateForm() {
         ModelAndView modelAndView = new ModelAndView("/admin/create");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-    @PostMapping("/admin/create-user")
+    @PostMapping("/create-user")
     public ModelAndView saveUser(@ModelAttribute("user") User user) {
         User newuser = new User();
         newuser.setEmail(user.getEmail());
@@ -55,7 +56,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/list")
+    @GetMapping("/list")
     public ModelAndView listUser(@RequestParam("s") Optional<String> s, Pageable pageable) {
         Page<User> users;
         if (s.isPresent()) {
@@ -68,7 +69,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/edit-user/{id}")
+    @GetMapping("/edit-user/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user != null) {
@@ -82,7 +83,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/admin/edit-user")
+    @PostMapping("/edit-user")
     public ModelAndView updateUser(@ModelAttribute("user") User user) {
         User newuser = new User();
         newuser.setId(user.getId());
@@ -101,7 +102,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/delete-user/{id}")
+    @GetMapping("/delete-user/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user != null) {
@@ -115,7 +116,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/admin/delete-user")
+    @PostMapping("/delete-user")
     public String deleteUser(@ModelAttribute("user") User user) {
         userService.remove(user.getId());
         return "redirect:list";

@@ -19,7 +19,7 @@ public class UrlController {
 
     @GetMapping("/admin")
     public String admin() {
-        return "admin";
+        return "/admin/index";
     }
 
     @GetMapping("/403")
