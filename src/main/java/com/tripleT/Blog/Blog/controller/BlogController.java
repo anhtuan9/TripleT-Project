@@ -21,8 +21,8 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @GetMapping("/blogs")
-    public ModelAndView listBlogs(@RequestParam(name = "blog",required = false) Optional<String> b,
+    @GetMapping("/blog")
+    public ModelAndView listBlog(@RequestParam(name = "blog",required = false) Optional<String> b,
                                   @RequestParam(name = "selection",required = false, defaultValue = "author") String s,
                                   Pageable pageable){
         ModelAndView list = new ModelAndView("/blog/list");
@@ -33,7 +33,7 @@ public class BlogController {
             } else {
                 blogs = blogService.findAll(pageable);
             }
-            list.addObject("blogs", blogs);
+            list.addObject("blog", blogs);
             return list;
         }else if(s.equals("author")){
             if (b.isPresent()) {
@@ -41,7 +41,7 @@ public class BlogController {
             } else {
                 blogs = blogService.findAll(pageable);
             }
-            list.addObject("blogs", blogs);
+            list.addObject("blog", blogs);
             return list;
         }else if(s.equals("title")){
             if (b.isPresent()) {
@@ -49,7 +49,7 @@ public class BlogController {
             } else {
                 blogs = blogService.findAll(pageable);
             }
-            list.addObject("blogs", blogs);
+            list.addObject("blog", blogs);
             return list;
         }
         return list;
@@ -117,7 +117,7 @@ public class BlogController {
     @PostMapping("/delete-blog")
     public String deleteBlog(@ModelAttribute("blog") Blog blog){
         blogService.remove(blog.getId());
-        return "redirect:blogs";
+        return "redirect:list";
     }
     @GetMapping("/view-blog/{id}")
     public ModelAndView viewBlog(@PathVariable Long id){

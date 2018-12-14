@@ -36,11 +36,17 @@
                         </header>
                         <div class="panel-body">
                             <div class="form">
-                                <form class="form-validate form-horizontal " id="register_form"  th:action="@{/admin/create-user}" th:object="${user}" method="post">
+                                <form class="form-validate form-horizontal " id="register_form"  th:action="@{/admin/create-user}" enctype="multipart/form-data" th:object="${user}" method="post">
                                     <div class="form-group ">
                                         <label for="fullname" class="control-label col-lg-2">Full name <span class="required">*</span></label>
                                         <div class="col-lg-10">
                                             <input th:field="*{nickname}" class=" form-control" id="fullname" name="fullname" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label col-lg-2">Avata <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            <td th:object="${myFile}"><input type="file" th:field="*{multipartFile}"/></td>
                                         </div>
                                     </div>
                                     <!--<div class="form-group ">-->

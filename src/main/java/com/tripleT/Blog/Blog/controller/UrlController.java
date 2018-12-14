@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UrlController {
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "index1";
     }
 
     @GetMapping("/admin")
