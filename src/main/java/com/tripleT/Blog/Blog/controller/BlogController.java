@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +39,9 @@ public class BlogController {
     }
     @PostMapping("/create-blog")
     public ModelAndView createBlog(@ModelAttribute("blog") Blog blog){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        blog.setDate(dateFormat.format(date));
         blogService.save(blog);
         ModelAndView createBlog = new ModelAndView("/blog/create");
         createBlog.addObject("blog", new Blog());
