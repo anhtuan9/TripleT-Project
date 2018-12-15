@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Index Page</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-Logged user: <span th:text="${#request.userPrincipal.name}"></span>
-Roles: <span th:text="${#request.userPrincipal.principal.authorities}"></span>
-<a th:href="@{/user/edit-user/__${#request.userPrincipal.name}__ }">Edit</a>
-<form action="#" th:action="@{/logout}" method="POST">
-    <button type="submit">Logout</button>
-</form>
+<table>
+    <table border="1">
+        <tr>
+            <th>Author name</th>
+            <th>Title</th>
+            <th>Tag</th>
+            <th>Date</th>
+            <th>View</th>
+        </tr>
+        <th:block th:each="blogs : ${blogs}">
+            <tr>
+                <td th:text="${blogs.author_name}"></td>
+                <td th:text="${blogs.title}"></td>
+                <td th:text="${blogs.tags}"></td>
+                <td th:text="${blogs.date}"></td>
+                <td><a th:href="@{/mem-view-blog/__${blogs.id}__}">View</a></td>
+            </tr>
+        </th:block>
+    </table>
+</table>
 </body>
 </html>

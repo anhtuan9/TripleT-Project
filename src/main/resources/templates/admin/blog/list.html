@@ -5,7 +5,7 @@
     <title>Blogs</title>
     </head>
     <body>
-    <a href="/user/blog">Blog</a>
+    <a href="/admin/blog">Blog</a>
 <p>
     <a href="/create-blog">Create new blog</a>
 </p>
@@ -17,7 +17,6 @@
         <option value="title">Title</option>
         <option value="tag">Tag</option>
     </select>
-    <input name="blog" type="text">
     <input type="submit" value="Search">
 </form><br/>
 <table border="1">
@@ -30,15 +29,15 @@
         <th>Edit</th>
         <th>Delete</th>
     </tr>
-    <th:block th:each="blogs : ${blogs}">
+    <th:block th:each="blog : ${blogs}">
         <tr>
-            <td th:text="${blogs.author_name}"></td>
-            <td th:text="${blogs.title}"></td>
-            <td th:text="${blogs.tags}"></td>
-            <td th:text="${blogs.date}"></td>
-            <td><a th:href="@{user/blog/view-blog/__${blogs.id}__}">View</a></td>
-            <td><a th:href="@{user/blog/edit-blog/__${blogs.id}__ }">Edit</a></td>
-            <td><a th:href="@{user/blog/delete-blog/__${blogs.id}__}">Delete</a></td>
+            <td th:text="${blog.author_name}"></td>
+            <td th:text="${blog.title}"></td>
+            <td th:text="${blog.tags}"></td>
+            <td th:text="${blog.date}"></td>
+            <td><a th:href="@{user/blog/view-blog/__${blog.id}__}">View</a></td>
+            <td><a th:href="@{user/blog/edit-blog/__${blog.id}__ }">Edit</a></td>
+            <td><a th:href="@{user/blog/delete-blog/__${blog.id}__}">Delete</a></td>
         </tr>
     </th:block>
 </table>

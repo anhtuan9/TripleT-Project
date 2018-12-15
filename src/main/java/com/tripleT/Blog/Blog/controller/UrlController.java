@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -22,7 +23,7 @@ public class UrlController {
     private BlogService blogService;
     @GetMapping("/")
     public ModelAndView index(Pageable pageable) {
-        ModelAndView modelAndView = new ModelAndView("index1");
+        ModelAndView modelAndView = new ModelAndView("index");
         Page<Blog> blogs;
         blogs = blogService.findAll(pageable);
         modelAndView.addObject("blogs", blogs);
@@ -48,6 +49,17 @@ public class UrlController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
+    }
+    @GetMapping("/mem-view-blog/{id}")
+    public ModelAndView USER_viewBlog(@PathVariable Long id) {
+        Blog blog = blogService.findById(id);
+        if (blog != null) {
+            ModelAndView view = new ModelAndView("/view");
+            view.addObject("blog", blog);
+            return view;
+        } else {
+            return new ModelAndView();
+        }
     }
 
 }
