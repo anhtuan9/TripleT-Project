@@ -5,27 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-<header th:replace="/layout :: navmenu"></header>
-
-<table>
-    <table border="1">
+<table border="1">
+    <th:block th:each="blogs : ${blogs}">
         <tr>
-            <th>Author name</th>
-            <th>Title</th>
-            <th>Tag</th>
-            <th>Date</th>
-            <th>View</th>
+            <td th:text="${blogs.author_name}"></td>
+            <td th:text="${blogs.title}"></td>
+            <td th:text="${blogs.tags}"></td>
+            <td th:text="${blogs.date}"></td>
+            <td></td>
         </tr>
-        <th:block th:each="blogs : ${blogs}">
-            <tr>
-                <td th:text="${blogs.author_name}"></td>
-                <td th:text="${blogs.title}"></td>
-                <td th:text="${blogs.tags}"></td>
-                <td th:text="${blogs.date}"></td>
-                <td><a th:href="@{/mem-view-blog/__${blogs.id}__}">View</a></td>
-            </tr>
-        </th:block>
-    </table>
+    </th:block>
 </table>
 </body>
 </html>
